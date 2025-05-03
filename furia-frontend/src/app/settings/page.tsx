@@ -479,7 +479,7 @@ const Page = () => {
     const height = 700;
     const left = window.screenX + (window.outerWidth - width) / 2;
     const top = window.screenY + (window.outerHeight - height) / 2;
-    const redirectUri = `${process.env.NEXT_PUBLIC_API_URL}/auth/callback?provider=${provider}`;
+    const redirectUri = `${process.env.NEXT_PUBLIC_REDI_URL}/auth/callback?provider=${provider}`;
 
     switch (provider) {
       case "twitch": {
