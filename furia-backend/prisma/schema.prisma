@@ -1,0 +1,77 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  password     String
+  points       Int      @default(0)
+
+  // Dados do perfil
+  address      String?
+  cpf          String?
+  interests    String?
+  activities   String?
+  events       String?
+  purchases    String?
+
+  // IDs das redes sociais (autenticação)
+  twitterId    String?  @unique
+  instagramId  String?  @unique
+  facebookId   String?  @unique
+  twitchId     String?  @unique
+  discordId    String?  @unique
+  
+  // Perfis de jogos
+  steam        String?
+  valorant     String?
+  gamersclub   String?
+  lol          String?
+  cs2          String?
+  rainbowSix   String?
+
+  documents    Document[]
+  pointsHistory PointHistory[]
+  socialAccounts SocialAccount[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+  hasAcceptedTerms Boolean @default(false)
+}
+
+model Document {
+  id        String   @id @default(uuid())
+  type      String
+  url       String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model PointHistory {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  points    Int
+  action    String
+  createdAt DateTime @default(now())
+}
+
+model SocialAccount {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  provider  String
+  socialId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@unique([userId, provider])
+}
