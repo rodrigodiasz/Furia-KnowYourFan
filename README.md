@@ -1,5 +1,5 @@
 
-# Furia Know Your Fan
+# Furia Know Your Fan 🐾
 
 Um aplicativo web moderno para engajamento e gerenciamento de fãs, construído com Next.js e NestJS.
 
