@@ -1,3 +1,4 @@
+
 # Furia Know Your Fan
 
 Um aplicativo web moderno para engajamento e gerenciamento de fãs, construído com Next.js e NestJS.
@@ -10,7 +11,7 @@ Furia Know Your Fan é uma aplicação full-stack projetada para melhorar o enga
 
 ### Frontend (`furia-frontend/`)
 
-- **Framework**: Next.js 15
+- **Framework**: Next.js 15  
 - **Bibliotecas de UI**:
   - Material-UI (MUI)
   - Radix UI
@@ -39,20 +40,20 @@ Furia Know Your Fan é uma aplicação full-stack projetada para melhorar o enga
 │   ├── src/
 │   │   ├── app/            # Páginas do roteador Next.js
 │   │   ├── components/     # Componentes UI reutilizáveis
-│   │   ├── lib/           # Funções utilitárias
-│   │   ├── services/      # Serviços de API
-│   │   └── types/         # Definições de tipos TypeScript
-│   └── public/            # Arquivos estáticos
+│   │   ├── lib/            # Funções utilitárias
+│   │   ├── services/       # Serviços de API
+│   │   └── types/          # Definições de tipos TypeScript
+│   └── public/             # Arquivos estáticos
 │
-└── furia-backend/         # Aplicação NestJS backend
+└── furia-backend/          # Aplicação NestJS backend
     ├── src/
-    │   ├── app/          # Módulo principal da aplicação
-    │   ├── document/     # Módulo de processamento de documentos
-    │   ├── esports/      # Funcionalidades relacionadas a esports
-    │   ├── points/       # Sistema de pontos
-    │   ├── services/     # Serviços de lógica de negócios
-    │   └── users/        # Gerenciamento de usuários
-    └── prisma/          # Schema do banco de dados e migrações
+    │   ├── app/            # Módulo principal da aplicação
+    │   ├── document/       # Módulo de processamento de documentos
+    │   ├── esports/        # Funcionalidades relacionadas a esports
+    │   ├── points/         # Sistema de pontos
+    │   ├── services/       # Serviços de lógica de negócios
+    │   └── users/          # Gerenciamento de usuários
+    └── prisma/             # Schema do banco de dados e migrações
 ```
 
 ## 🚀 Começando
@@ -129,7 +130,100 @@ DISCORD_CLIENT_SECRET=seu_discord_client_secret
 OPENAI_API_KEY=sua_chave_api_openai
 ```
 
-Tanto o frontend quanto o backend requerem variáveis de ambiente configuradas.
+## 🧬 Gerando o Cliente Prisma
+
+Após instalar as dependências do backend, **é essencial** gerar o cliente Prisma para que a aplicação NestJS possa interagir corretamente com o banco de dados:
+
+```bash
+npx prisma generate
+```
+
+
+---
+
+## 🔐 Configurando Autenticação Social
+
+Para permitir que os usuários se autentiquem via redes sociais, é necessário registrar sua aplicação em cada provedor e configurar corretamente a URL de callback:
+
+### 🔁 URL de Callback Padrão
+
+Use a seguinte URL de redirecionamento (callback) para todos os provedores:
+
+```
+https://seu-link/auth/callback?provider=nomedaprovedora
+```
+
+Substitua `nomedaprovedora` por: `discord`, `twitch`, `twitter`, `instagram`, ou `facebook`.
+
+---
+
+### 🟣 Discord
+
+1. Acesse: [Discord Developer Portal](https://discord.com/developers/applications)
+2. Crie uma nova aplicação
+3. Vá em **OAuth2 > Redirects** e adicione:
+   ```
+   https://seu-link/auth/callback?provider=discord
+   ```
+4. Copie o `Client ID` e `Client Secret` e insira no `.env`
+
+---
+
+### 🟪 Twitch
+
+1. Acesse: [Twitch Developer Console](https://dev.twitch.tv/console/apps)
+2. Crie um novo aplicativo
+3. Adicione o redirect:
+   ```
+   https://seu-link/auth/callback?provider=twitch
+   ```
+4. Copie o `Client ID` e `Client Secret` e preencha no `.env`
+
+---
+
+### 🐦 Twitter (X)
+
+> O Twitter exige aprovação para uso de OAuth. Você deve ter uma conta de desenvolvedor aprovada.
+
+1. Acesse: [Twitter Developer Portal](https://developer.twitter.com/)
+2. Crie um projeto e um App
+3. Vá em **Authentication Settings** e defina como:
+   - Callback URL:
+     ```
+     https://seu-link/auth/callback?provider=twitter
+     ```
+   - Website URL: https://furia-knowyourfan.vercel.app
+4. Copie `Client ID` e `Client Secret` para o `.env`
+
+---
+
+### 📷 Instagram (Basic Display API)
+
+> O Instagram exige configuração via Facebook for Developers.
+
+1. Acesse: [Facebook for Developers](https://developers.facebook.com/)
+2. Crie um App do tipo "Consumer"
+3. No painel do App, adicione o produto **Instagram Basic Display**
+4. Em **Configurações > URI de Redirecionamento válidas**, insira:
+   ```
+   https://seu-link/auth/callback?provider=instagram
+   ```
+5. Copie o `Client ID` e `Client Secret`
+
+---
+
+### 🔵 Facebook
+
+1. Acesse: [Facebook for Developers](https://developers.facebook.com/)
+2. Crie um App do tipo "Consumer"
+3. Vá em **Facebook Login > Settings**
+4. Em **Valid OAuth Redirect URIs**, adicione:
+   ```
+   https://seu-link/auth/callback?provider=facebook
+   ```
+5. Copie `Client ID` e `Client Secret`
+
+---
 
 ## 📝 Funcionalidades
 
